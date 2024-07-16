@@ -1,0 +1,38 @@
+@if ( isLoadingPlaces() ) {
+  <div class="alert alert-primary mt-2 text-center">
+    <h6>Cargando</h6>
+    <span>Espere por favor...</span>
+  </div>
+}
+
+@if ( places.length > 0 ) {
+
+  <ul class="list-group mt-2 overflow-scroll result-fit">
+    <button
+    class="btn btn-block btn-outline-secondary px-2"
+    (click)="toggleResults()"
+    >{{ hidden() ? 'Mostrar resultados': 'Ocultar resultados' }}</button>
+
+    @if ( !hidden() ) {
+      @for (place of places; track place.id) {
+        <li class="list-group-item list-group-item-action pointer active mt-1 "
+        [class.active]="place.id === selectedId"
+        (click)="flyTo(place)">
+        <h6>{{ place.properties.name }}</h6>
+        <p>{{ place.properties.full_address }}</p>
+        <button
+        class="btn btn-sm btn-outline-primary"
+        [ngClass]="(place.id === selectedId) ? 'btn-outline-light' : 'btn-outline-primary'"
+        (click)="getDirections(place)"
+        >
+          Direcciones
+        </button>
+      </li>
+      }<
+
+    }
+  </ul>
+
+}
+
+
